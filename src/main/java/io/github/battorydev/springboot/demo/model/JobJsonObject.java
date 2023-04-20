@@ -1,7 +1,9 @@
 package io.github.battorydev.springboot.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonFilter("AttributeFilter.ID")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JobJsonObject {
     private String timestamp;

@@ -1,9 +1,10 @@
 package io.github.battorydev.springboot.demo.model;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-public class JobRecord {
-    private Date timestamp;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class JobJsonObject {
+    private String timestamp;
 
     private String Employer;
 
@@ -27,15 +28,15 @@ public class JobRecord {
 
     private String gender;
 
-    private String additonal;
+    private String additional;
 
     private String comment;
 
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -127,12 +128,12 @@ public class JobRecord {
         this.gender = gender;
     }
 
-    public String getAdditonal() {
-        return additonal;
+    public String getAdditional() {
+        return additional;
     }
 
-    public void setAdditonal(String additonal) {
-        this.additonal = additonal;
+    public void setAdditional(String additional) {
+        this.additional = additional;
     }
 
     public String getComment() {

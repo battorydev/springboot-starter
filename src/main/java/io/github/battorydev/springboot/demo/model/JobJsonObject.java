@@ -3,6 +3,10 @@ package io.github.battorydev.springboot.demo.model;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * The model for keeping data from JSON file.
+ * Each instance represents one job data record.
+ */
 @JsonFilter("AttributeFilter.ID")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JobJsonObject {

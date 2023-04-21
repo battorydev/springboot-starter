@@ -1,6 +1,7 @@
 package io.github.battorydev.springboot.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -25,6 +26,12 @@ public class JobJsonObject {
     private String yearsOfExp;
 
     private String salary;
+
+    /**
+     * The currency of salary. Default to $ (CAD?).
+     */
+    //@JsonIgnore
+    private String salaryCurrency = "$";
 
     private String signingBonus;
 
@@ -104,6 +111,14 @@ public class JobJsonObject {
 
     public String getSigningBonus() {
         return signingBonus;
+    }
+
+    public String getSalaryCurrency() {
+        return salaryCurrency;
+    }
+
+    public void setSalaryCurrency(String salaryCurrency) {
+        this.salaryCurrency = salaryCurrency;
     }
 
     public void setSigningBonus(String signingBonus) {

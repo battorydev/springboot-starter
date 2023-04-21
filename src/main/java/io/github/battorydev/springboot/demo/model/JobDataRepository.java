@@ -2,6 +2,7 @@ package io.github.battorydev.springboot.demo.model;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.battorydev.springboot.demo.util.SalaryConverter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.util.ResourceUtils;
@@ -45,15 +46,18 @@ public class JobDataRepository {
 
             Arrays.stream(jobRecords).forEach(job -> {
                 // TODO transform data
-
-                try {
-                    NumberFormat.getInstance().parse(job.getSalary()).doubleValue();
-                    records.add(job);
-                } catch (ParseException | NumberFormatException e) {
-                    LOGGER.error("Error salary format on record. Value:" + job.getSalary());
+                JobJsonObject convertedJob = SalaryConverter.convertSalary(job);
+                if (convertedJob != null){
+                    records.add(convertedJob);
+                } else {
                     errorRecords.add(job);
                 }
 
+//                try {
+//                    NumberFormat.getInstance().parse(job.getSalary()).doubleValue();
+//                } catch (ParseException | NumberFormatException e) {
+//                    LOGGER.error("Error salary format on record. Value:" + job.getSalary());
+//                }
             });
             LOGGER.info("Read Total:{} Error:{}", records.size() + errorRecords.size(), errorRecords.size());
         } catch (IOException e) {

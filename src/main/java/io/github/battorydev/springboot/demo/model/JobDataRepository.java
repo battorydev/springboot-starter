@@ -8,8 +8,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.util.ResourceUtils;
 
 import java.io.IOException;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,12 +40,13 @@ public class JobDataRepository {
         ObjectMapper map = new ObjectMapper();
         map.enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES);
         try {
-            JobJsonObject[] jobRecords = map.readValue(ResourceUtils.getFile("data/salary_survey-3.json"), JobJsonObject[].class);
+            JobJsonObject[] jobRecords = map.readValue(ResourceUtils.getFile("data/salary_survey-3.json"),
+                    JobJsonObject[].class);
 
             Arrays.stream(jobRecords).forEach(job -> {
                 // TODO transform data
                 JobJsonObject convertedJob = SalaryConverter.convertSalary(job);
-                if (convertedJob != null){
+                if (convertedJob != null) {
                     records.add(convertedJob);
                 } else {
                     errorRecords.add(job);

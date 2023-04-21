@@ -28,8 +28,9 @@ public class JobDataController {
                                           @RequestParam(required = false, value = "sort") String sortFields,
                                           @RequestParam(required = false, value = "sort_type") String sortType,
                                           @RequestParam Map<String, String> allParam
-                                          ) {
-        LOGGER.info("field={}, sort={}, sort_type={}, allParam={}", fields, sortFields, sortType,String.valueOf(allParam));
+    ) {
+        LOGGER.info("field={}, sort={}, sort_type={}, allParam={}", fields, sortFields, sortType,
+                String.valueOf(allParam));
         String condition = allParam.get("condition");
         List<JobJsonObject> result = JobDataRepository.getInstance().getAll();
 
@@ -37,15 +38,18 @@ public class JobDataController {
             return new MappingJacksonValue(new ArrayList<>());
         }
 
-        if (condition != null){
-            if (condition.startsWith("salary>=")){
+        if (condition != null) {
+            // TODO job title equals ...
+            // TODO gender equals ...
+            // TODO salary (less than ..., equals ...,)
+            if (condition.startsWith("salary>=")) {
                 String val = condition.split(">=")[1];
                 try {
                     double target = Double.parseDouble(val);
                     result = result.stream().filter(job -> Double.parseDouble(job.getSalary()) >= target).collect(
                             Collectors.toList());
-                } catch (NumberFormatException | NullPointerException e){
-                    LogManager.getLogger().warn(e.getMessage(),e);
+                } catch (NumberFormatException | NullPointerException e) {
+                    LogManager.getLogger().warn(e.getMessage(), e);
                 }
             }
         }

@@ -8,6 +8,7 @@ public interface Converter {
 
     /**
      * Convert currency value
+     *
      * @param val JobJsonObject
      * @return updated JobJsonObject. Null if unable to convert currency value
      */

@@ -1,7 +1,6 @@
 package io.github.battorydev.springboot.demo.util.converter;
 
 import io.github.battorydev.springboot.demo.model.JobJsonObject;
-import org.apache.juli.logging.Log;
 import org.apache.logging.log4j.LogManager;
 
 import java.text.NumberFormat;
@@ -9,7 +8,6 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 public class CurrencyNameConverter implements Converter {
 

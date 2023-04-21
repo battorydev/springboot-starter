@@ -34,7 +34,8 @@ public class SalaryConverter {
 
         JobJsonObject converted = converter.get().convert(val);
         if (converted == null) {
-            LogManager.getLogger().info("Found converter but unable to convert value. Converter:{}, Value:{} ", converter.get().getClass().getSimpleName(), val.getSalary());
+            LogManager.getLogger().info("Found converter but unable to convert value. Converter:{}, Value:{} ",
+                    converter.get().getClass().getSimpleName(), val.getSalary());
         }
         return converted;
 

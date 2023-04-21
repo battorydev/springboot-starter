@@ -1,5 +1,6 @@
 package io.github.battorydev.springboot.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,12 +18,13 @@ public class JobJsonObject {
 
     private String location;
 
-    private String job;
-
+    @JsonAlias("Job Title")
     private String title;
 
+    @JsonAlias("Years at Employer")
     private String yearsAtEmployer;
 
+    @JsonAlias("Years of Experience")
     private String yearsOfExp;
 
     private String salary;
@@ -33,16 +35,20 @@ public class JobJsonObject {
     //@JsonIgnore
     private String salaryCurrency = "$";
 
+    @JsonAlias("Signing Bonus")
     private String signingBonus;
 
+    @JsonAlias("Annual Bonus")
+
     private String annualBonus;
+
+    @JsonAlias("Annual Stock Value/Bonus")
 
     private String annualStock;
 
     private String gender;
 
-    private String additional;
-
+    @JsonAlias("Additional Comments")
     private String comment;
 
     public String getTimestamp() {
@@ -67,14 +73,6 @@ public class JobJsonObject {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public String getJob() {
-        return job;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
     }
 
     public String getTitle() {
@@ -147,14 +145,6 @@ public class JobJsonObject {
 
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-    public String getAdditional() {
-        return additional;
-    }
-
-    public void setAdditional(String additional) {
-        this.additional = additional;
     }
 
     public String getComment() {

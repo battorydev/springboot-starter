@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 public class JobDataController {
@@ -24,13 +26,28 @@ public class JobDataController {
     @ResponseBody
     public MappingJacksonValue getJobData(@RequestParam(required = false, value = "fields") String fields,
                                           @RequestParam(required = false, value = "sort") String sortFields,
-                                          @RequestParam(required = false, value = "sort_type") String sortType) {
-        LOGGER.info("field={}, sort={}, sort_type={}", fields, sortFields, sortType);
-
+                                          @RequestParam(required = false, value = "sort_type") String sortType,
+                                          @RequestParam Map<String, String> allParam
+                                          ) {
+        LOGGER.info("field={}, sort={}, sort_type={}, allParam={}", fields, sortFields, sortType,String.valueOf(allParam));
+        String condition = allParam.get("condition");
         List<JobJsonObject> result = JobDataRepository.getInstance().getAll();
 
         if (result == null) {
             return new MappingJacksonValue(new ArrayList<>());
+        }
+
+        if (condition != null){
+            if (condition.startsWith("salary>=")){
+                String val = condition.split(">=")[1];
+                try {
+                    double target = Double.parseDouble(val);
+                    result = result.stream().filter(job -> Double.parseDouble(job.getSalary()) >= target).collect(
+                            Collectors.toList());
+                } catch (NumberFormatException | NullPointerException e){
+                    LogManager.getLogger().warn(e.getMessage(),e);
+                }
+            }
         }
 
         if (sortFields != null) {
@@ -53,10 +70,13 @@ public class JobDataController {
         if (fields != null) {
             SimpleFilterProvider titleFilter = new SimpleFilterProvider();
             titleFilter.addFilter("AttributeFilter.ID", SimpleBeanPropertyFilter.filterOutAllExcept(fields.split(",")));
-
+            mapping.setFilters(titleFilter);
+        } else {
+            SimpleFilterProvider titleFilter = new SimpleFilterProvider();
+            titleFilter.addFilter("AttributeFilter.ID", SimpleBeanPropertyFilter.serializeAll());
             mapping.setFilters(titleFilter);
         }
-
+        LOGGER.info("Total result returned: {}", result.size());
         return mapping;
     }
 }

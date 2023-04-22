@@ -44,19 +44,12 @@ public class JobDataRepository {
                     JobJsonObject[].class);
 
             Arrays.stream(jobRecords).forEach(job -> {
-                // TODO transform data
                 JobJsonObject convertedJob = SalaryConverter.convertSalary(job);
                 if (convertedJob != null) {
                     records.add(convertedJob);
                 } else {
                     errorRecords.add(job);
                 }
-
-//                try {
-//                    NumberFormat.getInstance().parse(job.getSalary()).doubleValue();
-//                } catch (ParseException | NumberFormatException e) {
-//                    LOGGER.error("Error salary format on record. Value:" + job.getSalary());
-//                }
             });
             LOGGER.info("Read Total:{} Error:{}", records.size() + errorRecords.size(), errorRecords.size());
         } catch (IOException e) {
@@ -71,12 +64,19 @@ public class JobDataRepository {
         return instance;
     }
 
+    public List<JobJsonObject> getValidSalaryRecord() {
+        return records;
+    }
+
     /**
      * Gets all valid records
      *
      * @return List of valid records.
      */
     public List<JobJsonObject> getAll() {
-        return records;
+        List<JobJsonObject> result = new ArrayList<>();
+        result.addAll(records);
+        result.addAll(errorRecords);
+        return result;
     }
 }

@@ -19,3 +19,7 @@ GET http://localhost:8080/job_data?fields=title,gender&sort=title&condition=gend
 ## Documentation (Swagger)
 http://localhost:8080/swagger-ui/index.html
 
+## Test Cases
+- JobDataControllerTests#givenTitleAndSalaryField_whenGetJobData_showTitleAndSalaryOnly
+- JobDataControllerTests#givenConditionSalaryGraterThan_whenGetJobData_returnJobSalaryGreaterThan
+- JobDataControllerTests#givenSortAndSortType_whenGetJobData_returnSortedData

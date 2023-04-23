@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class DemoApplicationTests {
+class JobDataControllerTests {
 
     @Autowired
     private MockMvc mockMvc;

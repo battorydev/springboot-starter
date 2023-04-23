@@ -8,6 +8,10 @@ import java.text.ParseException;
 import java.util.Currency;
 import java.util.Locale;
 
+/**
+ * The converter class for SalaryConverter.
+ * Uses NumberFormat.getCurrencyInstance(locale) to convert salary value.
+ */
 public class CurrencyByLocaleConverter implements Converter {
 
     private Locale[] supportLocales = new Locale[]{Locale.CANADA, Locale.CANADA_FRENCH, Locale.US, Locale.FRENCH, Locale.UK, Locale.GERMANY, Locale.ITALIAN, Locale.JAPANESE};

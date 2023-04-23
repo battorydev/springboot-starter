@@ -9,6 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The converter class for SalaryConverter.
+ * This class will check and remove name of currency before converting salary value.
+ */
 public class CurrencyNameConverter implements Converter {
 
     private Map<String, String> nameToSymbol = new HashMap<>();

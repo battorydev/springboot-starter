@@ -35,19 +35,24 @@ public class JobDataController {
         String condition = allParam.get("condition");
         List<JobJsonObject> result = Collections.emptyList();
 
+        // checks condition parameter to filter job_data
         if (condition != null) {
             result = JobDataRepository.getInstance().getValidSalaryRecord();
+
+            // job title
             if (condition.startsWith("title")) {
                 String val = condition.replaceFirst("title=", "");
                 result = result.stream().filter(job -> job.getTitle() != null && job.getTitle().equalsIgnoreCase(val)).collect(Collectors.toList());
 
             }
 
+            // gender
             if (condition.startsWith("gender")) {
                 String val = condition.replaceFirst("gender=", "");
                 result = result.stream().filter(job -> job.getGender() != null && job.getGender().equalsIgnoreCase(val)).collect(Collectors.toList());
             }
 
+            // salary
             if (condition.startsWith("salary")) {
                 String val = null;
                 if (condition.startsWith("salary>=")) {
@@ -82,6 +87,7 @@ public class JobDataController {
             result = JobDataRepository.getInstance().getAll();
         }
 
+        // check sort and sort_type parameter
         if (sortFields != null) {
             result.sort((job1, job2) -> {
                 if ("title".equalsIgnoreCase(sortFields)) {
@@ -98,6 +104,7 @@ public class JobDataController {
             });
         }
 
+        // checks fields parameter
         MappingJacksonValue mapping = new MappingJacksonValue(result);
         SimpleFilterProvider titleFilter = new SimpleFilterProvider();
         if (fields != null) {

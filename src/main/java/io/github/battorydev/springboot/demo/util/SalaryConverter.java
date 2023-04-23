@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Helper class to convert check and convert salary into comparable values.
+ * Usage: SalaryConverter#convertSalary(JobJsonObject)
+ */
 public class SalaryConverter {
 
     private static final Logger LOGGER = LogManager.getLogger();
@@ -25,6 +29,12 @@ public class SalaryConverter {
         // should not be instantiated
     }
 
+    /**
+     * Check and covert salary in JobJsonObject.
+     *
+     * @param val the JobJsonObject
+     * @return the updated JobJsonObject
+     */
     public static JobJsonObject convertSalary(JobJsonObject val) {
         Optional<Converter> converter = mapper.stream().filter(mapper -> mapper.accept(val)).findFirst();
         if (!converter.isPresent()) {

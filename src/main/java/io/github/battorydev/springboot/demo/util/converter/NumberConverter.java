@@ -8,6 +8,10 @@ import java.text.ParseException;
 import java.util.Currency;
 import java.util.Locale;
 
+/**
+ * The converter class for SalaryConverter.
+ * Uses Double.parseDouble() to converts number directly.
+ */
 public class NumberConverter implements Converter {
 
     @Override

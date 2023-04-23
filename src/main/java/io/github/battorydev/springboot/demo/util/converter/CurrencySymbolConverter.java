@@ -7,6 +7,10 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.regex.Pattern;
 
+/**
+ * The converter class for SalaryConverter.
+ * Converts salary starting with currency symbol.
+ */
 public class CurrencySymbolConverter implements Converter {
 
     @Override

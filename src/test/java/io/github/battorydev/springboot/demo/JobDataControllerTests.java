@@ -73,25 +73,25 @@ class JobDataControllerTests {
         }
     }
 
-	@Test
-	void givenSortAndSortType_whenGetJobData_returnSortedData() throws Exception {
-		String uri = "/job_data?sort=title&sort_type=DESC";
-		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(uri)
-				.accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+    @Test
+    void givenSortAndSortType_whenGetJobData_returnSortedData() throws Exception {
+        String uri = "/job_data?sort=title&sort_type=DESC";
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(uri)
+                .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
 
-		int status = mvcResult.getResponse().getStatus();
-		assertEquals(200, status);
+        int status = mvcResult.getResponse().getStatus();
+        assertEquals(200, status);
 
-		String contentType = mvcResult.getResponse().getContentType();
-		assertEquals("application/json", contentType);
+        String contentType = mvcResult.getResponse().getContentType();
+        assertEquals("application/json", contentType);
 
-		String content = mvcResult.getResponse().getContentAsString();
-		ObjectMapper mapper = new ObjectMapper();
-		JobJsonObject[] actual = mapper.readValue(content, JobJsonObject[].class);
+        String content = mvcResult.getResponse().getContentAsString();
+        ObjectMapper mapper = new ObjectMapper();
+        JobJsonObject[] actual = mapper.readValue(content, JobJsonObject[].class);
 
-		assertTrue(actual.length > 0);
-		for (int i=1 ; i< actual.length ; i++) {
-			assertTrue(actual[i-1].getTitle().compareToIgnoreCase(actual[i].getTitle()) >= 0);
-		}
-	}
+        assertTrue(actual.length > 0);
+        for (int i = 1; i < actual.length; i++) {
+            assertTrue(actual[i - 1].getTitle().compareToIgnoreCase(actual[i].getTitle()) >= 0);
+        }
+    }
 }

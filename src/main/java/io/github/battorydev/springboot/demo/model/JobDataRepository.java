@@ -58,9 +58,9 @@ public class JobDataRepository {
     }
 
     public static JobDataRepository getInstance() {
-        //if (instance == null) {
-        instance = new JobDataRepository();
-        //}
+        if (instance == null) {
+            instance = new JobDataRepository();
+        }
         return instance;
     }
 

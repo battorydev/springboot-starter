@@ -85,10 +85,10 @@ public class JobDataController {
         if (sortFields != null) {
             result.sort((job1, job2) -> {
                 if ("title".equalsIgnoreCase(sortFields)) {
-                    if (sortType == null || sortType.equalsIgnoreCase("DESC")) {
-                        return job1.getTitle().compareToIgnoreCase(job2.getTitle());
-                    } else {
+                    if (sortType != null && sortType.equalsIgnoreCase("DESC")) {
                         return job2.getTitle().compareToIgnoreCase(job1.getTitle());
+                    } else {
+                        return job1.getTitle().compareToIgnoreCase(job2.getTitle());
                     }
                 }
 
@@ -99,15 +99,13 @@ public class JobDataController {
         }
 
         MappingJacksonValue mapping = new MappingJacksonValue(result);
+        SimpleFilterProvider titleFilter = new SimpleFilterProvider();
         if (fields != null) {
-            SimpleFilterProvider titleFilter = new SimpleFilterProvider();
             titleFilter.addFilter("AttributeFilter.ID", SimpleBeanPropertyFilter.filterOutAllExcept(fields.split(",")));
-            mapping.setFilters(titleFilter);
         } else {
-            SimpleFilterProvider titleFilter = new SimpleFilterProvider();
             titleFilter.addFilter("AttributeFilter.ID", SimpleBeanPropertyFilter.serializeAll());
-            mapping.setFilters(titleFilter);
         }
+        mapping.setFilters(titleFilter);
         LOGGER.info("Total result returned: {}", result.size());
         return mapping;
     }

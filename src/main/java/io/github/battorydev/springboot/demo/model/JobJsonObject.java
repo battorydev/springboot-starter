@@ -2,6 +2,7 @@ package io.github.battorydev.springboot.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -152,5 +153,37 @@ public class JobJsonObject {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @JsonIgnore
+    public Object getByName(String name) {
+        switch (name) {
+            case "yearsOfExp":
+                return getYearsOfExp();
+            case "timestamp":
+                return getTimestamp();
+            case "employer":
+                return getEmployer();
+            case "location":
+                return getLocation();
+            case "title":
+                return getTitle();
+            case "yearsOfEmployer":
+                return getYearsAtEmployer();
+            case "salary":
+                return getSalary();
+            case "signingBonus":
+                return getSigningBonus();
+            case "annualBonus":
+                return getAnnualBonus();
+            case "annualStock":
+                return getAnnualStock();
+            case "gender":
+                return getGender();
+            case "comment":
+                return getComment();
+            default:
+                return null;
+        }
     }
 }

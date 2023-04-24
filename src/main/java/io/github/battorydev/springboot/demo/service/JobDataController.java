@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -86,29 +85,26 @@ public class JobDataController {
             }
         } else if (sortFields != null && sortFields.contains("salary")) {
             result = JobDataRepository.getInstance().getValidSalaryRecord();
-        }
-        else {
+        } else {
             result = JobDataRepository.getInstance().getAll();
         }
 
         // check sort and sort_type parameter
         if (sortFields != null) {
             result.sort((job1, job2) -> {
-                if ("title".equalsIgnoreCase(sortFields)) {
-                    if (sortType != null && sortType.equalsIgnoreCase("DESC")) {
-                        return job2.getTitle().compareToIgnoreCase(job1.getTitle());
-                    } else {
-                        return job1.getTitle().compareToIgnoreCase(job2.getTitle());
-                    }
-                } else if ("salary".equalsIgnoreCase(sortFields)) {
+                if ("salary".equalsIgnoreCase(sortFields)) {
                     if (sortType != null && sortType.equalsIgnoreCase("DESC")) {
                         return (int) (Double.parseDouble(job2.getSalary()) - Double.parseDouble(job1.getSalary()));
                     } else {
                         return (int) (Double.parseDouble(job1.getSalary()) - Double.parseDouble(job2.getSalary()));
                     }
+                } else {
+                    if (sortType != null && sortType.equalsIgnoreCase("DESC")) {
+                        return String.valueOf(job2.getByName(sortFields)).compareToIgnoreCase(String.valueOf(job1.getByName(sortFields)));
+                    } else {
+                        return String.valueOf(job1.getByName(sortFields)).compareToIgnoreCase(String.valueOf(job2.getByName(sortFields)));
+                    }
                 }
-
-                return job1.hashCode() - job2.hashCode();
             });
         }
 
@@ -124,4 +120,5 @@ public class JobDataController {
         LOGGER.info("Total result returned: {}", result.size());
         return mapping;
     }
+
 }

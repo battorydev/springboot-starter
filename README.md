@@ -3,6 +3,9 @@
 ## Requirements
 - Java 17
 
+## Main Class
+`io.github.battorydev.springboot.demo.DemoApplication`
+
 ## REST Endpoint
 ### GET /job_data 
 Returns all job data.
@@ -20,7 +23,7 @@ __Request Parameter__
 
 ## Sample URL request
 - GET http://localhost:8080/job_data
-- GET http://localhost:8080/job_data?fields=title,gender  
+- GET http://localhost:8080/job_data?fields=title,gender,salary  
 - GET http://localhost:8080/job_data?fields=title,salary&sort=salary  
 - GET http://localhost:8080/job_data?fields=title,salary&sort=salary&sort_type=DESC
 - GET http://localhost:8080/job_data?fields=title,gender,salary&sort=title&condition=salary%3E=10000000

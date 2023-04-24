@@ -8,13 +8,22 @@
 Returns all job data.
 
 __Request Parameter__
-- field - specify the fields to return. e.g., `/job_data/fields=title`
-- condition - apply query condition. e.g., `/job_data/condition=salary%3E=10000000`
-- sort - field to sort e.g., `/job_data/sort=salary`
-- sort_type - Sort order. ASC (default) or DESC `/job_data/sort=salary&sort_type=DESC`
+- __field__ - specify the fields to return.      
+    Filterable column: job title, salary, gender
 
-__Sample URL request__
-GET http://localhost:8080/job_data?fields=title,gender&sort=title&condition=gender=Male
+- __condition__ - apply query condition. Filterable field and operation:
+    - `title` operand: =
+    - `salary` operand: =, >=, >, <=, <
+    - `gender` operand: =
+- __sort__ - field to sort. Sortable fields: title, salary
+- __sort_type__ - Sort order. ASC (default) or DESC
+
+## Sample URL request
+- GET http://localhost:8080/job_data
+- GET http://localhost:8080/job_data?fields=title,gender  
+- GET http://localhost:8080/job_data?fields=title,salary&sort=salary  
+- GET http://localhost:8080/job_data?fields=title,salary&sort=salary&sort_type=DESC
+- GET http://localhost:8080/job_data?fields=title,gender,salary&sort=title&condition=salary%3E=10000000
 
 ## Documentation (Swagger)
 http://localhost:8080/swagger-ui/index.html

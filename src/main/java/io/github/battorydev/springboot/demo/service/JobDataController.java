@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class JobDataController {
                                           @RequestParam(required = false, value = "sort_type") String sortType,
                                           @RequestParam Map<String, String> allParam
     ) {
-        LOGGER.info("field={}, sort={}, sort_type={}, allParam={}", fields, sortFields, sortType,
+        LOGGER.info("fields={}, sort={}, sort_type={}, allParam={}", fields, sortFields, sortType,
                 String.valueOf(allParam));
         String condition = allParam.get("condition");
         List<JobJsonObject> result = Collections.emptyList();
@@ -83,7 +84,10 @@ public class JobDataController {
                     }
                 }
             }
-        } else {
+        } else if (sortFields != null && sortFields.contains("salary")) {
+            result = JobDataRepository.getInstance().getValidSalaryRecord();
+        }
+        else {
             result = JobDataRepository.getInstance().getAll();
         }
 
@@ -96,9 +100,13 @@ public class JobDataController {
                     } else {
                         return job1.getTitle().compareToIgnoreCase(job2.getTitle());
                     }
+                } else if ("salary".equalsIgnoreCase(sortFields)) {
+                    if (sortType != null && sortType.equalsIgnoreCase("DESC")) {
+                        return (int) (Double.parseDouble(job2.getSalary()) - Double.parseDouble(job1.getSalary()));
+                    } else {
+                        return (int) (Double.parseDouble(job1.getSalary()) - Double.parseDouble(job2.getSalary()));
+                    }
                 }
-
-                // TODO sort remaining fields and more fields to sort
 
                 return job1.hashCode() - job2.hashCode();
             });

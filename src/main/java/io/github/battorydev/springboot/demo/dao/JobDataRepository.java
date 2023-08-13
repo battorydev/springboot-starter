@@ -1,7 +1,7 @@
 package io.github.battorydev.springboot.demo.dao;
 
 import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import io.github.battorydev.springboot.demo.model.JobJsonObject;
 import io.github.battorydev.springboot.demo.util.SalaryConverter;
 import org.apache.logging.log4j.LogManager;
@@ -37,8 +37,7 @@ public class JobDataRepository {
      * @throws RuntimeException if file not found or unable to parse value
      */
     private void loadData() {
-        ObjectMapper map = new ObjectMapper();
-        map.enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES);
+        JsonMapper map = JsonMapper.builder().enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES).build();
         try {
             JobJsonObject[] jobRecords = map.readValue(ResourceUtils.getFile("data/salary_survey-3.json"),
                     JobJsonObject[].class);

@@ -1,6 +1,6 @@
 package io.github.battorydev.springboot.demo.service;
 
-import io.github.battorydev.springboot.demo.model.JobDataRepository;
+import io.github.battorydev.springboot.demo.dao.JobDataRepository;
 import io.github.battorydev.springboot.demo.model.JobJsonObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

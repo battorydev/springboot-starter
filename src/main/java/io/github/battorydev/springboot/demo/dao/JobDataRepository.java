@@ -1,7 +1,8 @@
-package io.github.battorydev.springboot.demo.model;
+package io.github.battorydev.springboot.demo.dao;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.battorydev.springboot.demo.model.JobJsonObject;
 import io.github.battorydev.springboot.demo.util.SalaryConverter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

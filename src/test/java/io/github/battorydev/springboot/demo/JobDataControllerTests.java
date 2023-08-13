@@ -39,16 +39,16 @@ class JobDataControllerTests {
         assertTrue(actual.length > 0);
         assertFalse(actual[0].getTitle().isEmpty());
         assertFalse(actual[0].getSalary().isEmpty());
-        assertTrue(actual[0].getGender() == null);
-        assertTrue(actual[0].getComment() == null);
-        assertTrue(actual[0].getEmployer() == null);
-        assertTrue(actual[0].getAnnualBonus() == null);
-        assertTrue(actual[0].getAnnualStock() == null);
-        assertTrue(actual[0].getLocation() == null);
-        assertTrue(actual[0].getSigningBonus() == null);
-        assertTrue(actual[0].getTimestamp() == null);
-        assertTrue(actual[0].getYearsAtEmployer() == null);
-        assertTrue(actual[0].getYearsOfExp() == null);
+        assertNull(actual[0].getGender());
+        assertNull(actual[0].getComment());
+        assertNull(actual[0].getEmployer());
+        assertNull(actual[0].getAnnualBonus());
+        assertNull(actual[0].getAnnualStock());
+        assertNull(actual[0].getLocation());
+        assertNull(actual[0].getSigningBonus());
+        assertNull(actual[0].getTimestamp());
+        assertNull(actual[0].getYearsAtEmployer());
+        assertNull(actual[0].getYearsOfExp());
     }
 
     @Test

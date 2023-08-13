@@ -36,7 +36,7 @@ public class JobDataController {
         LOGGER.info("fields={}, sort={}, sort_type={}, allParam={}", fields, sortFields, sortType,
                 String.valueOf(allParam));
 
-        List<JobJsonObject> result = jobDataService.getJobData(fields, sortFields, sortType, allParam);
+        List<JobJsonObject> result = jobDataService.getJobData(allParam, sortFields, sortType);
 
         // checks fields parameter
         MappingJacksonValue mapping = new MappingJacksonValue(result);

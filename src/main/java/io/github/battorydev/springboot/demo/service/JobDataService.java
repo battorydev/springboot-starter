@@ -6,10 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,12 +21,12 @@ public class JobDataService {
         this.jobDataRepository = jobDataRepository;
     }
 
-    public List<JobJsonObject> getJobData(String fields, String sortFields, String sortType, Map<String, String> allParam) {
-        String condition = allParam.get("condition");
+    public List<JobJsonObject> getJobData(Map<String, String> allParam, String sortFields, String sortType) {
 
-        List<JobJsonObject> result = Collections.emptyList();
+        List<JobJsonObject> result;
 
         // checks condition parameter to filter job_data
+        String condition = allParam.get("condition");
         if (condition != null) {
             result = jobDataRepository.getValidSalaryRecord();
 
@@ -47,7 +45,7 @@ public class JobDataService {
 
             // salary
             if (condition.startsWith("salary")) {
-                String val = null;
+                String val;
                 if (condition.startsWith("salary>=")) {
                     val = condition.replaceFirst("salary>=", "");
                 } else if (condition.startsWith("salary<=")) {
@@ -63,17 +61,13 @@ public class JobDataService {
                     throw new IllegalArgumentException("Illegal Operation");
                 }
 
-                if (val != null) {
-                    try {
-                        double target = Double.parseDouble(val);
-                        Predicate<JobJsonObject> filter = (job) -> {
-                            return Double.parseDouble(job.getSalary()) >= target;
-                        };
-                        result = result.stream().filter(filter).collect(
-                                Collectors.toList());
-                    } catch (NumberFormatException | NullPointerException e) {
-                        throw new RuntimeException(e.getMessage());
-                    }
+                try {
+                    double target = Double.parseDouble(val);
+                    result = result.stream()
+                            .filter((job) -> Double.parseDouble(job.getSalary()) >= target)
+                            .collect(Collectors.toList());
+                } catch (NumberFormatException | NullPointerException e) {
+                    throw new RuntimeException(e.getMessage());
                 }
             }
         } else if (sortFields != null && sortFields.contains("salary")) {
@@ -100,6 +94,7 @@ public class JobDataService {
                 }
             });
         }
+
         return result;
     }
 }

@@ -19,7 +19,7 @@ public class JobDataService {
 
     private final JobDataRepository jobDataRepository;
 
-    public JobDataService(JobDataRepository jobDataRepository){
+    public JobDataService(JobDataRepository jobDataRepository) {
         this.jobDataRepository = jobDataRepository;
     }
 

@@ -111,16 +111,16 @@ public class JobJsonObject {
         return signingBonus;
     }
 
+    public void setSigningBonus(String signingBonus) {
+        this.signingBonus = signingBonus;
+    }
+
     public String getSalaryCurrency() {
         return salaryCurrency;
     }
 
     public void setSalaryCurrency(String salaryCurrency) {
         this.salaryCurrency = salaryCurrency;
-    }
-
-    public void setSigningBonus(String signingBonus) {
-        this.signingBonus = signingBonus;
     }
 
     public String getAnnualBonus() {

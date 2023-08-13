@@ -1,4 +1,4 @@
-package io.github.battorydev.springboot.demo.service;
+package io.github.battorydev.springboot.demo.controller;
 
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
@@ -23,6 +23,12 @@ public class JobDataController {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
+    private final JobDataRepository jobDataRepository;
+
+    public JobDataController(JobDataRepository jobDataRepository) {
+        this.jobDataRepository = jobDataRepository;
+    }
+
     @GetMapping("/job_data")
     @ResponseBody
     public MappingJacksonValue getJobData(@RequestParam(required = false, value = "fields") String fields,
@@ -37,7 +43,7 @@ public class JobDataController {
 
         // checks condition parameter to filter job_data
         if (condition != null) {
-            result = JobDataRepository.getInstance().getValidSalaryRecord();
+            result = jobDataRepository.getValidSalaryRecord();
 
             // job title
             if (condition.startsWith("title")) {
@@ -84,9 +90,9 @@ public class JobDataController {
                 }
             }
         } else if (sortFields != null && sortFields.contains("salary")) {
-            result = JobDataRepository.getInstance().getValidSalaryRecord();
+            result = jobDataRepository.getValidSalaryRecord();
         } else {
-            result = JobDataRepository.getInstance().getAll();
+            result = jobDataRepository.getAll();
         }
 
         // check sort and sort_type parameter

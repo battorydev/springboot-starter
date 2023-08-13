@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.battorydev.springboot.demo.util.SalaryConverter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
 import java.io.IOException;
@@ -16,14 +17,12 @@ import java.util.List;
  * Repository class for keeping data from JSON file.
  * (Singleton class)
  */
+@Repository
 public class JobDataRepository {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private static JobDataRepository instance;
-
     private final List<JobJsonObject> records = new ArrayList<>();
-
 
     private final List<JobJsonObject> errorRecords = new ArrayList<>();
 
@@ -55,13 +54,6 @@ public class JobDataRepository {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static JobDataRepository getInstance() {
-        if (instance == null) {
-            instance = new JobDataRepository();
-        }
-        return instance;
     }
 
     public List<JobJsonObject> getValidSalaryRecord() {

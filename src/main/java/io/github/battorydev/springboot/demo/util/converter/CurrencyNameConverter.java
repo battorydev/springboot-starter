@@ -2,6 +2,7 @@ package io.github.battorydev.springboot.demo.util.converter;
 
 import io.github.battorydev.springboot.demo.model.JobJsonObject;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -14,6 +15,8 @@ import java.util.Optional;
  * This class will check and remove name of currency before converting salary value.
  */
 public class CurrencyNameConverter implements Converter {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private Map<String, String> nameToSymbol = new HashMap<>();
 
@@ -71,7 +74,7 @@ public class CurrencyNameConverter implements Converter {
             NumberFormat.getInstance().parse(valSalary.replace(currencyName.get(), "")).doubleValue();
             return true;
         } catch (ParseException e) {
-            LogManager.getLogger().error(e.getMessage(), e);
+            LOGGER.warn(e.getMessage());
             return false;
         }
     }
@@ -84,7 +87,7 @@ public class CurrencyNameConverter implements Converter {
                         valSalary.substring(0, currency.length()))).findAny();
 
         if (currencyName.isEmpty()) {
-            LogManager.getLogger().error("");
+            LOGGER.warn("Invalid currency.");
             return null;
         }
 
@@ -94,7 +97,7 @@ public class CurrencyNameConverter implements Converter {
             val.setSalaryCurrency(nameToSymbol.get(currencyName.get()));
             return val;
         } catch (ParseException e) {
-            LogManager.getLogger().error(e.getMessage(), e);
+            LOGGER.warn(e.getMessage());
             return null;
         }
     }

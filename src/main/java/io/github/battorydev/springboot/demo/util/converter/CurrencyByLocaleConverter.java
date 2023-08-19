@@ -2,6 +2,7 @@ package io.github.battorydev.springboot.demo.util.converter;
 
 import io.github.battorydev.springboot.demo.model.JobJsonObject;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -14,6 +15,7 @@ import java.util.Locale;
  */
 public class CurrencyByLocaleConverter implements Converter {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private Locale[] supportLocales = new Locale[]{Locale.CANADA, Locale.CANADA_FRENCH, Locale.US, Locale.FRENCH, Locale.UK, Locale.GERMANY, Locale.ITALIAN, Locale.JAPANESE};
 
     @Override
@@ -21,7 +23,6 @@ public class CurrencyByLocaleConverter implements Converter {
         for (Locale locale : supportLocales) {
             try {
                 double salary = NumberFormat.getCurrencyInstance(locale).parse(val.getSalary()).doubleValue();
-                //LogManager.getLogger().info("Accept: {}, Converted to:{}", val.getSalary(), salary);
                 return true;
             } catch (ParseException e) {
                 continue;
@@ -42,7 +43,7 @@ public class CurrencyByLocaleConverter implements Converter {
                 continue;
             }
         }
-        LogManager.getLogger().error("Unable to parse value: {}", val.getSalaryCurrency());
+        LOGGER.warn("Unable to parse value: {}", val.getSalaryCurrency());
         return null;
     }
 }

@@ -2,6 +2,7 @@ package io.github.battorydev.springboot.demo.util.converter;
 
 import io.github.battorydev.springboot.demo.model.JobJsonObject;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -14,12 +15,15 @@ import java.util.Locale;
  */
 public class NumberConverter implements Converter {
 
+    private static final Logger LOGGER = LogManager.getLogger();
+
     @Override
     public boolean accept(JobJsonObject val) {
         try {
             double salary = NumberFormat.getInstance().parse(val.getSalary()).doubleValue();
             return true;
         } catch (ParseException e) {
+            LOGGER.warn(e.getMessage());
             return false;
         }
     }
@@ -32,7 +36,7 @@ public class NumberConverter implements Converter {
             val.setSalaryCurrency(Currency.getInstance(Locale.getDefault()).getSymbol());
             return val;
         } catch (ParseException e) {
-            LogManager.getLogger().error(e.getMessage(), e);
+            LOGGER.warn(e.getMessage());
             return null;
         }
     }
